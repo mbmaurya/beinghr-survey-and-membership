@@ -14,7 +14,7 @@
   <body>
 
     <div class="container">
-        <form>
+        <form method="POST" action="survey.php">
             <div class="form-group">
                 <input type="text" class="form-control" name="fullname" placeholder="Enter your full name" required>
             </div>
@@ -26,11 +26,11 @@
             <div class="becomeAMember">
                 <span>Become a member?</span>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="becomeMember" id="yes" value="yes" checked>
+                    <input class="form-check-input" type="radio" name="becomeMember" id="yes" value="true" checked>
                     <label class="form-check-label" for="inlineRadio1">Yes</label>
                 </div>
                     <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="becomeMember" id="no" value="no">
+                    <input class="form-check-input" type="radio" name="becomeMember" id="no" value="false">
                     <label class="form-check-label" for="inlineRadio2">No</label>
                 </div>
             </div>      
