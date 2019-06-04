@@ -1,11 +1,11 @@
 
 <?php
-
+    // error_reporting(0);
     $fullname = $_POST['fullname'];
     $email = $_POST['email'];
     $member = $_POST['becomeMember'];
 
-    $host = 'localhost';
+    $servername = 'localhost';
     $dbname = 'bhr_survey_membership';
     $username = 'root';
     $password = '';
@@ -21,12 +21,15 @@
     } else {
         echo $fullname." ".$email." ".$member.".";
         try {
-            $conn = new PDO("mysql:host:$host;dbname=$dbname", $username, $password);
-            echo "Connected to $dbname at $host successfully.";
-            // $sql = "INSERT INTO survey(fullname, email, becomeMember)VALUES($fullname, $email, $member)";
-        } catch (PDOException $pe) {
-            die("Could not connect to the database $dbname :" . $pe->getMessage());
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO survey (fullname, email, member) VALUES ('$fullname', '$email', $member)";
+            $conn->exec($sql);
+            echo "New record added successfully";
+        } catch (PDOException $e) {
+            echo $sql . "<br>" . $e->getMessage();
         }
+        $conn = null;
     }
 
 ?>
