@@ -19,13 +19,20 @@
     } else if(empty($member)) {
         echo "Please select an option for membership";
     } else {
-        echo $fullname." ".$email." ".$member.".";
+        // echo $fullname." ".$email." ".$member.".";
         try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "INSERT INTO survey (fullname, email, member) VALUES ('$fullname', '$email', $member)";
-            $conn->exec($sql);
-            echo "New record added successfully";
+            $stmt = $conn->prepare("SELECT email FROM survey");
+            $stmt->execute();
+            $array = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            if(in_array($email, $array)) {
+                echo "Email already exists";
+            } else {
+                $sql = "INSERT INTO survey (fullname, email, member) VALUES ('$fullname', '$email', $member)";
+                $conn->exec($sql);
+                echo "New record added successfully";
+            }
         } catch (PDOException $e) {
             echo $sql . "<br>" . $e->getMessage();
         }
